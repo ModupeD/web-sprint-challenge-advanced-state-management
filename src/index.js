@@ -1,17 +1,39 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import reducer, { initialState } from "./reducers/index";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 import "./index.css";
-import App from "./App";
+// import App from "./App";
+import Header from "./components/Header";
+import AddForm from "./components/AddForm";
+import SmurfList from "./components/Smurf";
+import Smurf from "./components/Smurf";
 
-const { worker } = require('./mocks/browser');
+const { worker } = require("./mocks/browser");
 worker.start();
 
+const store = createStore(reducer, applyMiddleware(logger, thunk));
+
+function App() {
+  return (
+    <div>
+      <Header />
+      <AddForm />
+      <SmurfList />
+      <Smurf />
+    </div>
+  );
+}
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-    <App />, 
-    rootElement
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  rootElement
 );
 
 //Task List:
