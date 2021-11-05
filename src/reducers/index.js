@@ -2,9 +2,7 @@ import {
   LOADING_START,
   LOADING_SUCCESS,
   LOADING_FAILURE,
-  POSITION_UPDATE,
   UPDATE_NAME,
-  SUMMARY_UPDATE,
 } from "../actions";
 
 export const initialState = {
@@ -18,15 +16,10 @@ const reducer = (state = initialState, action) => {
     case LOADING_START:
       return { ...state, loading: true };
     case LOADING_SUCCESS:
-      return { ...state, loading: true };
+      return { ...state, smurfs: action.payload, loading: false };
     case LOADING_FAILURE:
-      return { ...state, loading: false };
-    case POSITION_UPDATE:
-      return { ...state, loading: true };
-    case UPDATE_NAME:
-      return { ...state, loading: true };
-    case SUMMARY_UPDATE:
-      return { ...state, loading: true };
+      return { ...state, err: action.payload, loading: false };
+
     default:
       console.log("Error: unknown action type in Title Reducer");
       return state;
