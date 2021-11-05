@@ -2,26 +2,31 @@ import {
   LOADING_START,
   LOADING_SUCCESS,
   LOADING_FAILURE,
-  UPDATE_NAME,
+  ADD_SMURF,
+  SET_ERROR,
 } from "../actions";
 
 export const initialState = {
   smurfs: [],
-  loading: false,
-  error: "",
+  isLoading: false,
+  errorMessage: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_START:
-      return { ...state, loading: true };
+      return { ...state, isLoading: true };
     case LOADING_SUCCESS:
-      return { ...state, smurfs: action.payload, loading: false };
+      return { ...state, smurfs: action.payload, isLoading: false };
     case LOADING_FAILURE:
-      return { ...state, err: action.payload, loading: false };
+      return { ...state, errorMessage: action.payload, isLoading: false };
+    case ADD_SMURF:
+      return { ...state, smurfs: [...state.smurfs, action.payload] };
+    case SET_ERROR:
+      return { ...state, errorMessage: action.payload };
 
     default:
-      console.log("Error: unknown action type in Title Reducer");
+      console.log("Error: unknown action type in Reducer");
       return state;
   }
 };
@@ -32,7 +37,7 @@ export default reducer;
 //Task List:
 //1. Adds the following state values into the initialState:
 //  - an array of smurfs
-//  - a boolean indicating if the app is loading
+//  - a boolean indicating if the app is isLoading
 //  - a string indicating a possible error message
 
 //2. Add in the arguments needed to complete a standard reducer function.
